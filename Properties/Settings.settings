@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MinesweeperXStatsViewer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="January" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sty</Value>
+    </Setting>
+    <Setting Name="February" Type="System.String" Scope="User">
+      <Value Profile="(Default)">lut</Value>
+    </Setting>
+    <Setting Name="March" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mar</Value>
+    </Setting>
+    <Setting Name="April" Type="System.String" Scope="User">
+      <Value Profile="(Default)">kwi</Value>
+    </Setting>
+    <Setting Name="May" Type="System.String" Scope="User">
+      <Value Profile="(Default)">maj</Value>
+    </Setting>
+    <Setting Name="June" Type="System.String" Scope="User">
+      <Value Profile="(Default)">cze</Value>
+    </Setting>
+    <Setting Name="July" Type="System.String" Scope="User">
+      <Value Profile="(Default)">lip</Value>
+    </Setting>
+    <Setting Name="August" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sie</Value>
+    </Setting>
+    <Setting Name="September" Type="System.String" Scope="User">
+      <Value Profile="(Default)">wrz</Value>
+    </Setting>
+    <Setting Name="October" Type="System.String" Scope="User">
+      <Value Profile="(Default)">paź</Value>
+    </Setting>
+    <Setting Name="November" Type="System.String" Scope="User">
+      <Value Profile="(Default)">lis</Value>
+    </Setting>
+    <Setting Name="December" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dec</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

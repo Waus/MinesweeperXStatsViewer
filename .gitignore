@@ -1,0 +1,75 @@
+# Ignore build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# VS temporary files
+.vs/
+*.ncb
+*.sdf
+*.opensdf
+*.cachefile
+
+# Build results
+*.dll
+*.exe
+*.app
+*.pdb
+*.cache
+*.log
+
+# Auto-generated files
+*.g.*
+*.i.*
+GeneratedCode/
+GeneratedFiles/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+.project.assets.json
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# JSON layout from Visual Studio
+*.sln.ide
+*.ide
+*.vsconfig
+
+# Resharper / Rider
+.idea/
+*.DotSettings.user
+
+# Windows image thumbnails
+Thumbs.db
+ehthumbs.db
+
+# OS junk
+.DS_Store
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# Others
+_ReSharper*/
+_ToolboxPackages/
+*.vsix
+*.psess
+*.vsp
+*.vspx
+*.coverage
+*.coveragexml
+*.code-workspace

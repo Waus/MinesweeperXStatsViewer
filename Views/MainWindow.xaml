@@ -1,0 +1,58 @@
+﻿<Window x:Class="MinesweeperXStatsViewer.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:MinesweeperXStatsViewer.ViewModels"
+        Title="Minesweeper X Stats Viewer" Height="600" Width="900">
+    
+
+    <DockPanel>
+        <!-- Górny pasek -->
+        <StackPanel DockPanel.Dock="Top"
+            Orientation="Horizontal"
+            Background="#EEE"
+            Height="50">
+            <Button Content="Choose stats file"
+            Margin="10"
+            Padding="10,5"
+            Command="{Binding LoadFileCommand}"/>
+
+            <Button Content="Initial settings"
+            Margin="10"
+            Padding="10,5"
+            Command="{Binding OpenSettingsCommand}"/>
+        </StackPanel>
+
+        <!-- Menu po lewej -->
+        <StackPanel DockPanel.Dock="Left" Width="200" Background="#DDD">
+            <Button Content="Beg" Margin="5" Command="{Binding FilterBegCommand}"/>
+            <Button Content="Int" Margin="5" Command="{Binding FilterIntCommand}"/>
+            <Button Content="Exp" Margin="5" Command="{Binding FilterExpCommand}"/>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <Grid>
+            <DataGrid ItemsSource="{Binding StatsItems}"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding DateTime}" Width="*" />
+                    <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="*" />
+                    <DataGridTextColumn Header="3BV" Binding="{Binding BBBV}" Width="*" />
+                    <DataGridTextColumn Header="3BV/s" Binding="{Binding BBBVPerSecond}" Width="*" />
+                    <DataGridTextColumn Header="RQP" Binding="{Binding RQP}" Width="*" />
+                    <DataGridTextColumn Header="Left" Binding="{Binding Left}" Width="*" />
+                    <DataGridTextColumn Header="Middle" Binding="{Binding Middle}" Width="*" />
+                    <DataGridTextColumn Header="Right" Binding="{Binding Right}" Width="*" />
+                    <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="*" />
+                    <DataGridTextColumn Header="Left/s" Binding="{Binding LeftPerSecond}" Width="*" />
+                    <DataGridTextColumn Header="Mid/s" Binding="{Binding MiddlePerSecond}" Width="*" />
+                    <DataGridTextColumn Header="Right/s" Binding="{Binding RightPerSecond}" Width="*" />
+                    <DataGridTextColumn Header="Total/s" Binding="{Binding TotalPerSecond}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </DockPanel>
+</Window>
