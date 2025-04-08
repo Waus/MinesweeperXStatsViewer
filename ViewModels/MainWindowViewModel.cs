@@ -32,9 +32,10 @@ namespace MinesweeperXStatsViewer.ViewModels
         }
 
         public ICommand LoadFileCommand { get; }
-        public ICommand FilterBegCommand { get; }
-        public ICommand FilterIntCommand { get; }
-        public ICommand FilterExpCommand { get; }
+        public ICommand AllHistoryCommand { get; }
+        public ICommand BegHistoryCommand { get; }
+        public ICommand IntHistoryCommand { get; }
+        public ICommand ExpHistoryCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -42,9 +43,10 @@ namespace MinesweeperXStatsViewer.ViewModels
             _allItems = new ObservableCollection<StatsItem>();
 
             LoadFileCommand = new RelayCommand(LoadFile);
-            FilterBegCommand = new RelayCommand(FilterBeg);
-            FilterIntCommand = new RelayCommand(FilterInt);
-            FilterExpCommand = new RelayCommand(FilterExp);
+            AllHistoryCommand = new RelayCommand(AllHistory);
+            BegHistoryCommand = new RelayCommand(BegHistory);
+            IntHistoryCommand = new RelayCommand(IntHistory);
+            ExpHistoryCommand = new RelayCommand(ExpHistory);
 
             OpenSettingsCommand = new RelayCommand(_ => RequestSettingsWindow?.Invoke());
         }
@@ -69,19 +71,25 @@ namespace MinesweeperXStatsViewer.ViewModels
             }
         }
 
-        private void FilterBeg(object parameter)
+        private void AllHistory(object parameter)
+        {
+            var filtered = _allItems;
+            StatsItems = new ObservableCollection<StatsItem>(filtered);
+        }
+
+        private void BegHistory(object parameter)
         {
             var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg);
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
-        private void FilterInt(object parameter)
+        private void IntHistory(object parameter)
         {
             var filtered = _allItems.Where(x => x.Level == LevelEnum.Int);
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
-        private void FilterExp(object parameter)
+        private void ExpHistory(object parameter)
         {
             var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp);
             StatsItems = new ObservableCollection<StatsItem>(filtered);
