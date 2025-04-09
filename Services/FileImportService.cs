@@ -19,7 +19,7 @@ namespace MinesweeperXStatsViewer.Services
 
             var lines = File.ReadAllLines(filePath, encoding).Skip(1);
 
-            var dtoList = lines
+            var statsItemsList = lines
                 .Where(line => !string.IsNullOrWhiteSpace(line))
                 .Select(ParseLineToDTO)
                 .Where(dto => dto != null
@@ -28,7 +28,7 @@ namespace MinesweeperXStatsViewer.Services
                 .Select(MapDtoToModel)
                 .ToList();
 
-            return dtoList;
+            return statsItemsList;
         }
 
         private static Encoding DetectEncodingOrDefault(string filePath, Encoding defaultEncoding)
@@ -123,7 +123,7 @@ namespace MinesweeperXStatsViewer.Services
 
             if (!DateTime.TryParseExact(
                     rawTime,
-                    "hh:mm:ss tt",                           // 12-godzinny format
+                    "hh:mm:ss tt",
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.None,
                     out DateTime timePart))
