@@ -48,6 +48,9 @@ namespace MinesweeperXStatsViewer.ViewModels
         public ICommand ExpTopTimeCommand { get; }
         public ICommand IntTopTimeCommand { get; }
         public ICommand BegTopTimeCommand { get; }
+        public ICommand ExpTopBBBVPerSecondCommand { get; }
+        public ICommand IntTopBBBVPerSecondCommand { get; }
+        public ICommand BegTopBBBVPerSecondCommand { get; }
 
         public event Action RequestSettingsWindow;
 
@@ -67,6 +70,10 @@ namespace MinesweeperXStatsViewer.ViewModels
             ExpTopTimeCommand = new RelayCommand(ExpTopTime);
             IntTopTimeCommand = new RelayCommand(IntTopTime);
             BegTopTimeCommand = new RelayCommand(BegTopTime);
+
+            ExpTopBBBVPerSecondCommand = new RelayCommand(ExpTopBBBVPerSecond);
+            IntTopBBBVPerSecondCommand = new RelayCommand(IntTopBBBVPerSecond);
+            BegTopBBBVPerSecondCommand = new RelayCommand(BegTopBBBVPerSecond);
         }
 
         private void LoadFile(object parameter)
@@ -118,21 +125,41 @@ namespace MinesweeperXStatsViewer.ViewModels
         private void ExpTopTime(object parameter)
         {
             CurrentView = ViewModeEnum.TopTimeView;
-            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp).OrderBy(x => x.Time).ToList();
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp).OrderBy(x => x.TimeRank).ToList();
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
         private void IntTopTime(object parameter)
         {
             CurrentView = ViewModeEnum.TopTimeView;
-            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int).OrderBy(x => x.Time).ToList();
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int).OrderBy(x => x.TimeRank).ToList();
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
         private void BegTopTime(object parameter)
         {
             CurrentView = ViewModeEnum.TopTimeView;
-            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg).OrderBy(x => x.Time).ToList();
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg).OrderBy(x => x.TimeRank).ToList();
+            StatsItems = new ObservableCollection<StatsItem>(filtered);
+        }
+
+        private void ExpTopBBBVPerSecond(object parameter)
+        {
+            CurrentView = ViewModeEnum.TopBBBVPerSecondView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp).OrderBy(x => x.BBBVPerSecondRank).ToList();
+            StatsItems = new ObservableCollection<StatsItem>(filtered);
+        }
+
+        private void IntTopBBBVPerSecond(object parameter)
+        {
+            CurrentView = ViewModeEnum.TopBBBVPerSecondView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int).OrderBy(x => x.BBBVPerSecondRank).ToList();
+        }
+
+        private void BegTopBBBVPerSecond(object parameter)
+        {
+            CurrentView = ViewModeEnum.TopBBBVPerSecondView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg).OrderBy(x => x.BBBVPerSecondRank).ToList();
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 

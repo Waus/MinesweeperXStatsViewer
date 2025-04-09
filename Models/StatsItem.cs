@@ -10,6 +10,7 @@ namespace MinesweeperXStatsViewer.Models
     public class StatsItem
     {
         public int? TimeRank { get; set; }
+        public int? BBBVPerSecondRank { get; set; }
         public LevelEnum Level { get; set; }
         public double Time { get; set; }
         public int BBBV { get; set; }

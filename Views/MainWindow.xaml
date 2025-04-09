@@ -143,9 +143,81 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="TopBBBVPerSecondViewTemplate">
+            <Grid>
+                <DataGrid ItemsSource="{Binding DataContext.StatsItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="10">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="#"
+                                    Binding="{Binding BBBVPerSecondRank}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="3BV/s"
+                                    Binding="{Binding BBBVPerSecond, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Level"
+                                    Binding="{Binding Level}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Date"
+                                    Binding="{Binding DateTime, StringFormat={}{0:dd-MM-yyyy HH:mm:ss}}"
+                                    Width="Auto"
+                                    MinWidth="170"/>
+                        <DataGridTextColumn Header="Time"
+                                    Binding="{Binding Time, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="3BV"
+                                    Binding="{Binding BBBV}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="3BV/s"
+                                    Binding="{Binding BBBVPerSecond, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="RQP"
+                                    Binding="{Binding RQP, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Left"
+                                    Binding="{Binding Left}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Middle"
+                                    Binding="{Binding Middle}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Right"
+                                    Binding="{Binding Right}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Total"
+                                    Binding="{Binding Total}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Left/s"
+                                    Binding="{Binding LeftPerSecond, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Mid/s"
+                                    Binding="{Binding MiddlePerSecond, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Right/s"
+                                    Binding="{Binding RightPerSecond, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Total/s"
+                                    Binding="{Binding TotalPerSecond, StringFormat={}{0:F2}}"
+                                    Width="*"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </DataTemplate>
+
         <local:MyViewSelector x:Key="Selector"
                               HistoryTemplate="{StaticResource HistoryViewTemplate}"
-                              TopTimeTemplate="{StaticResource TopTimeViewTemplate}"/>
+                              TopTimeTemplate="{StaticResource TopTimeViewTemplate}"
+                              TopBBBVPerSecondTemplate="{StaticResource TopBBBVPerSecondViewTemplate}"/>
 
     </Window.Resources>
 
@@ -160,10 +232,13 @@
             <Button Content="All levels history" Margin="5" Command="{Binding AllHistoryCommand}"/>
             <Button Content="Exp history" Margin="5" Command="{Binding ExpHistoryCommand}"/>
             <Button Content="Exp top time" Margin="5" Command="{Binding ExpTopTimeCommand}"/>
+            <Button Content="Exp top 3BV/s" Margin="5" Command="{Binding ExpTopBBBVPerSecondCommand}"/>
             <Button Content="Int history" Margin="5" Command="{Binding IntHistoryCommand}"/>
             <Button Content="Int top time" Margin="5" Command="{Binding IntTopTimeCommand}"/>
+            <Button Content="Int top 3BV/s" Margin="5" Command="{Binding IntTopBBBVPerSecondCommand}"/>
             <Button Content="Beg history" Margin="5" Command="{Binding BegHistoryCommand}"/>
             <Button Content="Beg top time" Margin="5" Command="{Binding BegTopTimeCommand}"/>
+            <Button Content="Beg top 3BV/s" Margin="5" Command="{Binding BegTopBBBVPerSecondCommand}"/>
         </StackPanel>
 
         <ContentControl Content="{Binding CurrentView}" ContentTemplateSelector="{StaticResource Selector}"/>

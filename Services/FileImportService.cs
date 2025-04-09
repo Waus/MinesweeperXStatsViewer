@@ -33,23 +33,39 @@ namespace MinesweeperXStatsViewer.Services
                 .OrderBy(item => item.Time)
                 .ToList();
 
-            var sortedExpStatsItems = statsItemsList
-                .Where(a => a.Level == LevelEnum.Exp)
-                .OrderBy(item => item.Time)
-                .ToList();
-
             var sortedIntStatsItems = statsItemsList
                 .Where(a => a.Level == LevelEnum.Int)
                 .OrderBy(item => item.Time)
                 .ToList();
 
-            var BegStatsItemsWithRank = SetTimeRanks(sortedBegStatsItems);
-            var IntStatsItemsWithRank = SetTimeRanks(sortedIntStatsItems);
-            var ExpStatsItemsWithRank = SetTimeRanks(sortedExpStatsItems);
+            var sortedExpStatsItems = statsItemsList
+                .Where(a => a.Level == LevelEnum.Exp)
+                .OrderBy(item => item.Time)
+                .ToList();
 
-            var allStatsItemsWithRank = BegStatsItemsWithRank
-            .Concat(IntStatsItemsWithRank)
-            .Concat(ExpStatsItemsWithRank)
+            var BegStatsItemsWithTimeRank = SetTimeRanks(sortedBegStatsItems);
+            var IntStatsItemsWithTimeRank = SetTimeRanks(sortedIntStatsItems);
+            var ExpStatsItemsWithTimeRank = SetTimeRanks(sortedExpStatsItems);
+
+            sortedBegStatsItems = BegStatsItemsWithTimeRank
+                .OrderByDescending(item => item.BBBVPerSecond)
+                .ToList();
+
+            sortedIntStatsItems = ExpStatsItemsWithTimeRank
+                .OrderByDescending(item => item.BBBVPerSecond)
+                .ToList();
+
+            sortedExpStatsItems = IntStatsItemsWithTimeRank
+                .OrderByDescending(item => item.BBBVPerSecond)
+                .ToList();
+
+            var BegStatsItemsWithAllRanks = SetBBBVPerSecondRanks(sortedBegStatsItems);
+            var IntStatsItemsWithAllRanks = SetBBBVPerSecondRanks(sortedIntStatsItems);
+            var ExpStatsItemsWithAllRanks = SetBBBVPerSecondRanks(sortedExpStatsItems);
+
+            var allStatsItemsWithRank = BegStatsItemsWithAllRanks
+            .Concat(IntStatsItemsWithAllRanks)
+            .Concat(ExpStatsItemsWithAllRanks)
             .ToList();
 
             return allStatsItemsWithRank;
@@ -175,6 +191,29 @@ namespace MinesweeperXStatsViewer.Services
                     rank += rankModifier;
                     statsItem.TimeRank = rank;
                     previousTime = statsItem.Time;
+                    rankModifier = 1;
+                }
+            }
+            return sortedStatsItems;
+        }
+
+        private static List<StatsItem> SetBBBVPerSecondRanks(List<StatsItem> sortedStatsItems)
+        {
+            double previousBBBVPerSecond = -1;
+            int rank = 0;
+            int rankModifier = 1;
+            foreach (var statsItem in sortedStatsItems)
+            {
+                if (statsItem.BBBVPerSecond == previousBBBVPerSecond)
+                {
+                    statsItem.BBBVPerSecondRank = rank;
+                    rankModifier++;
+                }
+                else
+                {
+                    rank += rankModifier;
+                    statsItem.BBBVPerSecondRank = rank;
+                    previousBBBVPerSecond = statsItem.BBBVPerSecond;
                     rankModifier = 1;
                 }
             }

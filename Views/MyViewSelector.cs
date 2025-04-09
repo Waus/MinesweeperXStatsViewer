@@ -14,9 +14,15 @@ namespace MinesweeperXStatsViewer.Views
         {
             if (item is ViewModeEnum mode)
             {
-                if (mode == ViewModeEnum.TopTimeView) return TopTimeTemplate;
-                if (mode == ViewModeEnum.TopBBBVPerSecondView) return TopBBBVPerSecondTemplate;
-                return HistoryTemplate;
+                switch (mode)
+                {
+                    case ViewModeEnum.TopTimeView:
+                        return TopTimeTemplate;
+                    case ViewModeEnum.TopBBBVPerSecondView:
+                        return TopBBBVPerSecondTemplate;
+                    default:
+                        return HistoryTemplate;
+                }
             }
             return base.SelectTemplate(item, container);
         }
