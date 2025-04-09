@@ -89,7 +89,7 @@
                     <DataGrid.Columns>
 
                         <DataGridTextColumn Header="#"
-                                            Binding="{Binding Rank}"
+                                            Binding="{Binding TimeRank}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Time"
                                             Binding="{Binding Time, StringFormat={}{0:F2}}"

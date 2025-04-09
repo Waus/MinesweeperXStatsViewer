@@ -12,12 +12,12 @@ namespace MinesweeperXStatsViewer.Services
     {
         public static List<StatsItem> LoadStatsFromFile(string filePath)
         {
-            var allowedLevels = new HashSet<string> { "Beg", "Int", "Exp" };
-
             // Try to detect BOM, fallback to Windows-1250 if none
             Encoding encoding = DetectEncodingOrDefault(filePath, Encoding.GetEncoding("Windows-1250"));
 
             var lines = File.ReadAllLines(filePath, encoding).Skip(1);
+
+            var allowedLevels = new HashSet<string> { "Beg", "Int", "Exp" };
 
             var statsItemsList = lines
                 .Where(line => !string.IsNullOrWhiteSpace(line))
@@ -28,7 +28,31 @@ namespace MinesweeperXStatsViewer.Services
                 .Select(MapDtoToModel)
                 .ToList();
 
-            return statsItemsList;
+            var sortedBegStatsItems = statsItemsList
+                .Where(a => a.Level == LevelEnum.Beg)
+                .OrderBy(item => item.Time)
+                .ToList();
+
+            var sortedExpStatsItems = statsItemsList
+                .Where(a => a.Level == LevelEnum.Exp)
+                .OrderBy(item => item.Time)
+                .ToList();
+
+            var sortedIntStatsItems = statsItemsList
+                .Where(a => a.Level == LevelEnum.Int)
+                .OrderBy(item => item.Time)
+                .ToList();
+
+            var BegStatsItemsWithRank = SetTimeRanks(sortedBegStatsItems);
+            var IntStatsItemsWithRank = SetTimeRanks(sortedIntStatsItems);
+            var ExpStatsItemsWithRank = SetTimeRanks(sortedExpStatsItems);
+
+            var allStatsItemsWithRank = BegStatsItemsWithRank
+            .Concat(IntStatsItemsWithRank)
+            .Concat(ExpStatsItemsWithRank)
+            .ToList();
+
+            return allStatsItemsWithRank;
         }
 
         private static Encoding DetectEncodingOrDefault(string filePath, Encoding defaultEncoding)
@@ -132,6 +156,29 @@ namespace MinesweeperXStatsViewer.Services
             }
 
             return new DateTime(year, month, day, timePart.Hour, timePart.Minute, timePart.Second);
+        }
+
+        private static List<StatsItem> SetTimeRanks(List<StatsItem> sortedStatsItems)
+        {
+            double previousTime = -1;
+            int rank = 0;
+            int rankModifier = 1;
+            foreach (var statsItem in sortedStatsItems)
+            {
+                if (statsItem.Time == previousTime)
+                {
+                    statsItem.TimeRank = rank;
+                    rankModifier++;
+                }
+                else
+                {
+                    rank += rankModifier;
+                    statsItem.TimeRank = rank;
+                    previousTime = statsItem.Time;
+                    rankModifier = 1;
+                }
+            }
+            return sortedStatsItems;
         }
 
 
