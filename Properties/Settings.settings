@@ -36,7 +36,7 @@
       <Value Profile="(Default)">lis</Value>
     </Setting>
     <Setting Name="December" Type="System.String" Scope="User">
-      <Value Profile="(Default)">dec</Value>
+      <Value Profile="(Default)">gru</Value>
     </Setting>
   </Settings>
 </SettingsFile>

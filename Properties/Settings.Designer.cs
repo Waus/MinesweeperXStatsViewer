@@ -157,7 +157,7 @@ namespace MinesweeperXStatsViewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("dec")]
+        [global::System.Configuration.DefaultSettingValueAttribute("gru")]
         public string December {
             get {
                 return ((string)(this["December"]));

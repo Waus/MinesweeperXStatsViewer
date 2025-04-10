@@ -42,7 +42,6 @@ namespace MinesweeperXStatsViewer.Views
             Properties.Settings.Default.December = DecemberBox.Text;
 
             Properties.Settings.Default.Save();
-            MessageBox.Show("Settings saved successfully!", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         }
     }

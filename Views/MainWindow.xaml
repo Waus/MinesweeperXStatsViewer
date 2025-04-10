@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MinesweeperXStatsViewer.Views"
         xmlns:vm="clr-namespace:MinesweeperXStatsViewer.ViewModels"
-        Title="Minesweeper X Stats Viewer" Height="600" Width="900">
+        Title="Minesweeper X Stats Viewer" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
 
@@ -130,8 +131,8 @@
                         <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="*"/>
                         <DataGridTextColumn Header="Month" Binding="{Binding Month}" Width="*"/>
                         <DataGridTextColumn Header="Games Won" Binding="{Binding GamesWon}" Width="*"/>
-                        <DataGridTextColumn Header="Average Time" Binding="{Binding AverageTime, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Average 3BV/s" Binding="{Binding Average3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
+                        <DataGridTextColumn Header="Avg Time" Binding="{Binding AverageTime, StringFormat={}{0:F2}}" Width="*"/>
+                        <DataGridTextColumn Header="Avg 3BV/s" Binding="{Binding Average3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
                         <DataGridTextColumn Header="Best Time" Binding="{Binding BestTime, StringFormat={}{0:F2}}" Width="*"/>
                         <DataGridTextColumn Header="Best 3BV/s" Binding="{Binding Best3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
                     </DataGrid.Columns>
