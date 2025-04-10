@@ -17,6 +17,8 @@ namespace MinesweeperXStatsViewer.ViewModels
 
         private ObservableCollection<StatsItem> _statsItems;
         private ObservableCollection<StatsItem> _allItems;
+        private ObservableCollection<StatsMonthlyAggregate> _statsMonthlyAggregated;
+        private ViewModeEnum _currentView;
 
         public ObservableCollection<StatsItem> StatsItems
         {
@@ -28,7 +30,16 @@ namespace MinesweeperXStatsViewer.ViewModels
             }
         }
 
-        private ViewModeEnum _currentView = ViewModeEnum.HistoryView;
+        public ObservableCollection<StatsMonthlyAggregate> StatsMonthlyAggregated
+        {
+            get => _statsMonthlyAggregated;
+            set
+            {
+                _statsMonthlyAggregated = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ViewModeEnum CurrentView
         {
             get => _currentView;
@@ -48,16 +59,19 @@ namespace MinesweeperXStatsViewer.ViewModels
         public ICommand ExpTopTimeCommand { get; }
         public ICommand IntTopTimeCommand { get; }
         public ICommand BegTopTimeCommand { get; }
-        public ICommand ExpTopBBBVPerSecondCommand { get; }
-        public ICommand IntTopBBBVPerSecondCommand { get; }
-        public ICommand BegTopBBBVPerSecondCommand { get; }
-
+        public ICommand ExpTopBBBVPerSecCommand { get; }
+        public ICommand IntTopBBBVPerSecCommand { get; }
+        public ICommand BegTopBBBVPerSecCommand { get; }
+        public ICommand ExpMonthlyStatsCommand { get; }
+        public ICommand IntMonthlyStatsCommand { get; }
+        public ICommand BegMonthlyStatsCommand { get; }
         public event Action RequestSettingsWindow;
 
         public MainWindowViewModel()
         {
             _statsItems = new ObservableCollection<StatsItem>();
             _allItems = new ObservableCollection<StatsItem>();
+            _statsMonthlyAggregated = new ObservableCollection<StatsMonthlyAggregate>();
 
             LoadFileCommand = new RelayCommand(LoadFile);
             OpenSettingsCommand = new RelayCommand(_ => RequestSettingsWindow?.Invoke());
@@ -71,9 +85,15 @@ namespace MinesweeperXStatsViewer.ViewModels
             IntTopTimeCommand = new RelayCommand(IntTopTime);
             BegTopTimeCommand = new RelayCommand(BegTopTime);
 
-            ExpTopBBBVPerSecondCommand = new RelayCommand(ExpTopBBBVPerSecond);
-            IntTopBBBVPerSecondCommand = new RelayCommand(IntTopBBBVPerSecond);
-            BegTopBBBVPerSecondCommand = new RelayCommand(BegTopBBBVPerSecond);
+            ExpTopBBBVPerSecCommand = new RelayCommand(ExpTopBBBVPerSec);
+            IntTopBBBVPerSecCommand = new RelayCommand(IntTopBBBVPerSec);
+            BegTopBBBVPerSecCommand = new RelayCommand(BegTopBBBVPerSec);
+
+            ExpMonthlyStatsCommand = new RelayCommand(ExpMonthlyStats);
+            IntMonthlyStatsCommand = new RelayCommand(IntMonthlyStats);
+            BegMonthlyStatsCommand = new RelayCommand(BegMonthlyStats);
+
+            CurrentView = ViewModeEnum.HistoryView;
         }
 
         private void LoadFile(object parameter)
@@ -143,24 +163,94 @@ namespace MinesweeperXStatsViewer.ViewModels
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
-        private void ExpTopBBBVPerSecond(object parameter)
+        private void ExpTopBBBVPerSec(object parameter)
         {
-            CurrentView = ViewModeEnum.TopBBBVPerSecondView;
-            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp).OrderBy(x => x.BBBVPerSecondRank).ToList();
+            CurrentView = ViewModeEnum.TopBBBVPerSecView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp).OrderBy(x => x.BBBVPerSecRank).ToList();
             StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
-        private void IntTopBBBVPerSecond(object parameter)
+        private void IntTopBBBVPerSec(object parameter)
         {
-            CurrentView = ViewModeEnum.TopBBBVPerSecondView;
-            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int).OrderBy(x => x.BBBVPerSecondRank).ToList();
+            CurrentView = ViewModeEnum.TopBBBVPerSecView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int).OrderBy(x => x.BBBVPerSecRank).ToList();
+            StatsItems = new ObservableCollection<StatsItem>(filtered);
         }
 
-        private void BegTopBBBVPerSecond(object parameter)
+        private void BegTopBBBVPerSec(object parameter)
         {
-            CurrentView = ViewModeEnum.TopBBBVPerSecondView;
-            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg).OrderBy(x => x.BBBVPerSecondRank).ToList();
+            CurrentView = ViewModeEnum.TopBBBVPerSecView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg).OrderBy(x => x.BBBVPerSecRank).ToList();
             StatsItems = new ObservableCollection<StatsItem>(filtered);
+        }
+
+        private void ExpMonthlyStats(object parameter)
+        {
+            CurrentView = ViewModeEnum.MonthlyStatsView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp);
+            var grouped = filtered
+                .GroupBy(x => new { x.DateTime.Year, x.DateTime.Month })
+                .Select(g => new StatsMonthlyAggregate
+                {
+                    Level = LevelEnum.Exp,
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    GamesWon = g.Count(),
+                    AverageTime = g.Average(s => s.Time),
+                    Average3BVPerSec = g.Average(s => s.BBBVPerSec),
+                    BestTime = g.Min(s => s.Time),
+                    Best3BVPerSec = g.Max(s => s.BBBVPerSec)
+                })
+                .OrderBy(a => a.Year)
+                .ThenBy(a => a.Month)
+                .ToList();
+            StatsMonthlyAggregated = new ObservableCollection<StatsMonthlyAggregate>(grouped);
+        }
+
+        private void IntMonthlyStats(object parameter)
+        {
+            CurrentView = ViewModeEnum.MonthlyStatsView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int);
+            var grouped = filtered
+                .GroupBy(x => new { x.DateTime.Year, x.DateTime.Month })
+                .Select(g => new StatsMonthlyAggregate
+                {
+                    Level = LevelEnum.Int,
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    GamesWon = g.Count(),
+                    BestTime = g.Min(s => s.Time),
+                    AverageTime = g.Average(s => s.Time),
+                    Best3BVPerSec = g.Max(s => s.BBBVPerSec),
+                    Average3BVPerSec = g.Average(s => s.BBBVPerSec)
+                })
+                .OrderBy(a => a.Year)
+                .ThenBy(a => a.Month)
+                .ToList();
+            StatsMonthlyAggregated = new ObservableCollection<StatsMonthlyAggregate>(grouped);
+        }
+
+        private void BegMonthlyStats(object parameter)
+        {
+            CurrentView = ViewModeEnum.MonthlyStatsView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg);
+            var grouped = filtered
+                .GroupBy(x => new { x.DateTime.Year, x.DateTime.Month })
+                .Select(g => new StatsMonthlyAggregate
+                {
+                    Level = LevelEnum.Beg,
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    GamesWon = g.Count(),
+                    BestTime = g.Min(s => s.Time),
+                    AverageTime = g.Average(s => s.Time),
+                    Best3BVPerSec = g.Max(s => s.BBBVPerSec),
+                    Average3BVPerSec = g.Average(s => s.BBBVPerSec)
+                })
+                .OrderBy(a => a.Year)
+                .ThenBy(a => a.Month)
+                .ToList();
+            StatsMonthlyAggregated = new ObservableCollection<StatsMonthlyAggregate>(grouped);
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

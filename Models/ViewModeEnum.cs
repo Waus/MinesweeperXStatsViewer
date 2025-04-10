@@ -4,6 +4,7 @@
     {
         HistoryView,
         TopTimeView,
-        TopBBBVPerSecondView
+        TopBBBVPerSecView,
+        MonthlyStatsView
     }
 }

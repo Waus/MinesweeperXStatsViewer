@@ -8,7 +8,8 @@ namespace MinesweeperXStatsViewer.Views
     {
         public DataTemplate HistoryTemplate { get; set; }
         public DataTemplate TopTimeTemplate { get; set; }
-        public DataTemplate TopBBBVPerSecondTemplate { get; set; }
+        public DataTemplate TopBBBVPerSecTemplate { get; set; }
+        public DataTemplate MonthlyStatsTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -16,10 +17,14 @@ namespace MinesweeperXStatsViewer.Views
             {
                 switch (mode)
                 {
+                    case ViewModeEnum.HistoryView:
+                        return HistoryTemplate;
                     case ViewModeEnum.TopTimeView:
                         return TopTimeTemplate;
-                    case ViewModeEnum.TopBBBVPerSecondView:
-                        return TopBBBVPerSecondTemplate;
+                    case ViewModeEnum.TopBBBVPerSecView:
+                        return TopBBBVPerSecTemplate;
+                    case ViewModeEnum.MonthlyStatsView:
+                        return MonthlyStatsTemplate;
                     default:
                         return HistoryTemplate;
                 }

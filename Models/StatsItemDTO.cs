@@ -15,7 +15,7 @@ namespace MinesweeperXStatsViewer.Models
         public double Time { get; set; }
         public int BBBV { get; set; }
         public int Solved { get; set; }
-        public double BBBVPerSecond { get; set; }
+        public double BBBVPerSec { get; set; }
         public double Est { get; set; }
         public int Left { get; set; }
         public int Middle { get; set; }

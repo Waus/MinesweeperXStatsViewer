@@ -48,20 +48,20 @@ namespace MinesweeperXStatsViewer.Services
             var ExpStatsItemsWithTimeRank = SetTimeRanks(sortedExpStatsItems);
 
             sortedBegStatsItems = BegStatsItemsWithTimeRank
-                .OrderByDescending(item => item.BBBVPerSecond)
+                .OrderByDescending(item => item.BBBVPerSec)
                 .ToList();
 
             sortedIntStatsItems = ExpStatsItemsWithTimeRank
-                .OrderByDescending(item => item.BBBVPerSecond)
+                .OrderByDescending(item => item.BBBVPerSec)
                 .ToList();
 
             sortedExpStatsItems = IntStatsItemsWithTimeRank
-                .OrderByDescending(item => item.BBBVPerSecond)
+                .OrderByDescending(item => item.BBBVPerSec)
                 .ToList();
 
-            var BegStatsItemsWithAllRanks = SetBBBVPerSecondRanks(sortedBegStatsItems);
-            var IntStatsItemsWithAllRanks = SetBBBVPerSecondRanks(sortedIntStatsItems);
-            var ExpStatsItemsWithAllRanks = SetBBBVPerSecondRanks(sortedExpStatsItems);
+            var BegStatsItemsWithAllRanks = SetBBBVPerSecRanks(sortedBegStatsItems);
+            var IntStatsItemsWithAllRanks = SetBBBVPerSecRanks(sortedIntStatsItems);
+            var ExpStatsItemsWithAllRanks = SetBBBVPerSecRanks(sortedExpStatsItems);
 
             var allStatsItemsWithRank = BegStatsItemsWithAllRanks
             .Concat(IntStatsItemsWithAllRanks)
@@ -108,7 +108,7 @@ namespace MinesweeperXStatsViewer.Services
                 Time = double.Parse(columns[4].Replace(',', '.'), CultureInfo.InvariantCulture),
                 BBBV = int.Parse(columns[5]),
                 Solved = int.Parse(columns[6]),
-                BBBVPerSecond = double.Parse(columns[7].Replace(',', '.'), CultureInfo.InvariantCulture),
+                BBBVPerSec = double.Parse(columns[7].Replace(',', '.'), CultureInfo.InvariantCulture),
                 Est = double.Parse(columns[8].Replace(',', '.'), CultureInfo.InvariantCulture),
                 Left = int.Parse(columns[9]),
                 Middle = int.Parse(columns[10]),
@@ -125,7 +125,7 @@ namespace MinesweeperXStatsViewer.Services
                 Level = Enum.Parse<LevelEnum>(dto.Level),
                 Time = dto.Time,
                 BBBV = dto.BBBV,
-                BBBVPerSecond = dto.BBBVPerSecond,
+                BBBVPerSec = dto.BBBVPerSec,
                 Left = dto.Left,
                 Middle = dto.Middle,
                 Right = dto.Right,
@@ -197,23 +197,23 @@ namespace MinesweeperXStatsViewer.Services
             return sortedStatsItems;
         }
 
-        private static List<StatsItem> SetBBBVPerSecondRanks(List<StatsItem> sortedStatsItems)
+        private static List<StatsItem> SetBBBVPerSecRanks(List<StatsItem> sortedStatsItems)
         {
-            double previousBBBVPerSecond = -1;
+            double previousBBBVPerSec = -1;
             int rank = 0;
             int rankModifier = 1;
             foreach (var statsItem in sortedStatsItems)
             {
-                if (statsItem.BBBVPerSecond == previousBBBVPerSecond)
+                if (statsItem.BBBVPerSec == previousBBBVPerSec)
                 {
-                    statsItem.BBBVPerSecondRank = rank;
+                    statsItem.BBBVPerSecRank = rank;
                     rankModifier++;
                 }
                 else
                 {
                     rank += rankModifier;
-                    statsItem.BBBVPerSecondRank = rank;
-                    previousBBBVPerSecond = statsItem.BBBVPerSecond;
+                    statsItem.BBBVPerSecRank = rank;
+                    previousBBBVPerSec = statsItem.BBBVPerSec;
                     rankModifier = 1;
                 }
             }
