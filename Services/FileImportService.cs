@@ -22,26 +22,40 @@ namespace MinesweeperXStatsViewer.Services
 
 			var statsItemsList = new List<StatsItem>();
 
-			try
-			{
-				statsItemsList = lines
-				.Where(line => !string.IsNullOrWhiteSpace(line))
-				.Select(ParseLineToDTO)
-				.Where(dto => dto != null
-							  && allowedLevels.Contains(dto.Level)
-							  && dto.Time == dto.Est)
-				.Select(MapDtoToModel)
-				.ToList();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Please configure month names in the settings correctly before loading the file.",
-					"Error",
-					MessageBoxButton.OK,
-					MessageBoxImage.Error);
-			}
+            try
+            {
+                statsItemsList = lines
+                    .Where(line => !string.IsNullOrWhiteSpace(line))
+                    .Select((line, index) => new { Line = line, Index = index })
+                    .Select(item =>
+                    {
+                        try
+                        {
+                            var dto = ParseLineToDTO(item.Line);
+                            if (dto == null || !allowedLevels.Contains(dto.Level) || dto.Time != dto.Est)
+                            {
+                                return null;
+                            }
+                            return MapDtoToModel(dto);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Error processing record number {item.Index + 1}: {ex.Message}", ex);
+                        }
+                    })
+                    .Where(model => model != null)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while processing the file:\n{ex.Message}",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                return new List<StatsItem>();
+            }
 
-			var sortedBegStatsItems = statsItemsList
+            var sortedBegStatsItems = statsItemsList
 				.Where(a => a.Level == LevelEnum.Beg)
 				.OrderBy(item => item.Time)
 				.ToList();
