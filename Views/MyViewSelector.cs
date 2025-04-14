@@ -10,6 +10,7 @@ namespace MinesweeperXStatsViewer.Views
         public DataTemplate TopTimeTemplate { get; set; }
         public DataTemplate TopBBBVPerSecTemplate { get; set; }
         public DataTemplate MonthlyStatsTemplate { get; set; }
+        public DataTemplate YearlyStatsTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -25,6 +26,8 @@ namespace MinesweeperXStatsViewer.Views
                         return TopBBBVPerSecTemplate;
                     case ViewModeEnum.MonthlyStatsView:
                         return MonthlyStatsTemplate;
+                    case ViewModeEnum.YearlyStatsView:
+                        return YearlyStatsTemplate;
                     default:
                         return HistoryTemplate;
                 }

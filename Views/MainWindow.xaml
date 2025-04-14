@@ -140,11 +140,39 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="YearlyStatsViewTemplate">
+            <Grid>
+                <DataGrid ItemsSource="{Binding DataContext.StatsYearlyAggregated, RelativeSource={RelativeSource AncestorType=Window}}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="10">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
+                        <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="*"/>
+                        <DataGridTextColumn Header="Games Won" Binding="{Binding GamesWon}" Width="*"/>
+                        <DataGridTextColumn Header="Avg Time" Binding="{Binding AverageTime, StringFormat={}{0:F2}}" Width="*"/>
+                        <DataGridTextColumn Header="Avg 3BV/s" Binding="{Binding Average3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
+                        <DataGridTextColumn Header="Best Time" Binding="{Binding BestTime, StringFormat={}{0:F2}}" Width="*"/>
+                        <DataGridTextColumn Header="Best 3BV/s" Binding="{Binding Best3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </DataTemplate>
+
         <local:MyViewSelector x:Key="Selector"
                               HistoryTemplate="{StaticResource HistoryViewTemplate}"
                               TopTimeTemplate="{StaticResource TopTimeViewTemplate}"
                               TopBBBVPerSecTemplate="{StaticResource TopBBBVPerSecViewTemplate}"
-                              MonthlyStatsTemplate="{StaticResource MonthlyStatsViewTemplate}"/>
+                              MonthlyStatsTemplate="{StaticResource MonthlyStatsViewTemplate}"
+                              YearlyStatsTemplate="{StaticResource YearlyStatsViewTemplate}"/>
     </Window.Resources>
 
     <DockPanel>
@@ -168,6 +196,9 @@
             <Button Content="Exp monthly stats" Margin="5" Command="{Binding ExpMonthlyStatsCommand}"/>
             <Button Content="Int monthly stats" Margin="5" Command="{Binding IntMonthlyStatsCommand}"/>
             <Button Content="Beg monthly stats" Margin="5" Command="{Binding BegMonthlyStatsCommand}"/>
+            <Button Content="Exp yearly stats" Margin="5" Command="{Binding ExpYearlyStatsCommand}"/>
+            <Button Content="Int yearly stats" Margin="5" Command="{Binding IntYearlyStatsCommand}"/>
+            <Button Content="Beg yearly stats" Margin="5" Command="{Binding BegYearlyStatsCommand}"/>
         </StackPanel>
 
         <ContentControl Content="{Binding CurrentView}"

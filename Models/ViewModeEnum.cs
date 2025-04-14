@@ -5,6 +5,7 @@
         HistoryView,
         TopTimeView,
         TopBBBVPerSecView,
-        MonthlyStatsView
+        MonthlyStatsView,
+        YearlyStatsView
     }
 }

@@ -18,6 +18,7 @@ namespace MinesweeperXStatsViewer.ViewModels
         private ObservableCollection<StatsItem> _statsItems;
         private ObservableCollection<StatsItem> _allItems;
         private ObservableCollection<StatsMonthlyAggregate> _statsMonthlyAggregated;
+        private ObservableCollection<StatsYearlyAggregate> _statsYearlyAggregated;
         private ViewModeEnum _currentView;
 
         public ObservableCollection<StatsItem> StatsItems
@@ -36,6 +37,16 @@ namespace MinesweeperXStatsViewer.ViewModels
             set
             {
                 _statsMonthlyAggregated = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<StatsYearlyAggregate> StatsYearlyAggregated
+        {
+            get => _statsYearlyAggregated;
+            set
+            {
+                _statsYearlyAggregated = value;
                 OnPropertyChanged();
             }
         }
@@ -65,6 +76,12 @@ namespace MinesweeperXStatsViewer.ViewModels
         public ICommand ExpMonthlyStatsCommand { get; }
         public ICommand IntMonthlyStatsCommand { get; }
         public ICommand BegMonthlyStatsCommand { get; }
+        public ICommand ExpYearlyStatsCommand { get; }
+        public ICommand IntYearlyStatsCommand { get; }
+        public ICommand BegYearlyStatsCommand { get; }
+
+
+
         public event Action RequestSettingsWindow;
 
         public MainWindowViewModel()
@@ -92,6 +109,10 @@ namespace MinesweeperXStatsViewer.ViewModels
             ExpMonthlyStatsCommand = new RelayCommand(ExpMonthlyStats);
             IntMonthlyStatsCommand = new RelayCommand(IntMonthlyStats);
             BegMonthlyStatsCommand = new RelayCommand(BegMonthlyStats);
+
+            ExpYearlyStatsCommand = new RelayCommand(ExpYearlyStats);
+            IntYearlyStatsCommand = new RelayCommand(IntYearlyStats);
+            BegYearlyStatsCommand = new RelayCommand(BegYearlyStats);
 
             CurrentView = ViewModeEnum.HistoryView;
         }
@@ -251,6 +272,69 @@ namespace MinesweeperXStatsViewer.ViewModels
                 .ThenBy(a => a.Month)
                 .ToList();
             StatsMonthlyAggregated = new ObservableCollection<StatsMonthlyAggregate>(grouped);
+        }
+
+        private void ExpYearlyStats(object parameter)
+        {
+            CurrentView = ViewModeEnum.YearlyStatsView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Exp);
+            var grouped = filtered
+                .GroupBy(x => new { x.DateTime.Year })
+                .Select(g => new StatsYearlyAggregate
+                {
+                    Level = LevelEnum.Exp,
+                    Year = g.Key.Year,
+                    GamesWon = g.Count(),
+                    AverageTime = g.Average(s => s.Time),
+                    Average3BVPerSec = g.Average(s => s.BBBVPerSec),
+                    BestTime = g.Min(s => s.Time),
+                    Best3BVPerSec = g.Max(s => s.BBBVPerSec)
+                })
+                .OrderBy(a => a.Year)
+                .ToList();
+            StatsYearlyAggregated = new ObservableCollection<StatsYearlyAggregate>(grouped);
+        }
+
+        private void IntYearlyStats(object parameter)
+        {
+            CurrentView = ViewModeEnum.YearlyStatsView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Int);
+            var grouped = filtered
+                .GroupBy(x => new { x.DateTime.Year })
+                .Select(g => new StatsYearlyAggregate
+                {
+                    Level = LevelEnum.Int,
+                    Year = g.Key.Year,
+                    GamesWon = g.Count(),
+                    BestTime = g.Min(s => s.Time),
+                    AverageTime = g.Average(s => s.Time),
+                    Best3BVPerSec = g.Max(s => s.BBBVPerSec),
+                    Average3BVPerSec = g.Average(s => s.BBBVPerSec)
+                })
+                .OrderBy(a => a.Year)
+                .ToList();
+            StatsYearlyAggregated = new ObservableCollection<StatsYearlyAggregate>(grouped);
+        }
+
+        private void BegYearlyStats(object parameter)
+        {
+            CurrentView = ViewModeEnum.YearlyStatsView;
+            var filtered = _allItems.Where(x => x.Level == LevelEnum.Beg);
+            var grouped = filtered
+                .GroupBy(x => new { x.DateTime.Year })
+                .Select(g => new StatsYearlyAggregate
+                {
+                    Level = LevelEnum.Beg,
+                    Year = g.Key.Year,
+                    GamesWon = g.Count(),
+                    BestTime = g.Min(s => s.Time),
+                    AverageTime = g.Average(s => s.Time),
+                    Best3BVPerSec = g.Max(s => s.BBBVPerSec),
+                    Average3BVPerSec = g.Average(s => s.BBBVPerSec)
+                })
+                .OrderBy(a => a.Year)
+                .ToList();
+            StatsYearlyAggregated = new ObservableCollection<StatsYearlyAggregate>(grouped);
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
