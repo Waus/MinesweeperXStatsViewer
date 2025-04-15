@@ -182,24 +182,89 @@
             <Button Content="Initial settings" Margin="10" Padding="10,5" Command="{Binding OpenSettingsCommand}"/>
         </StackPanel>
 
-        <StackPanel DockPanel.Dock="Left" Width="200" Background="#DDD">
-            <Button Content="All levels history" Margin="5" Command="{Binding AllHistoryCommand}"/>
-            <Button Content="Exp history" Margin="5" Command="{Binding ExpHistoryCommand}"/>
-            <Button Content="Int history" Margin="5" Command="{Binding IntHistoryCommand}"/>
-            <Button Content="Beg history" Margin="5" Command="{Binding BegHistoryCommand}"/>
-            <Button Content="Exp top time" Margin="5" Command="{Binding ExpTopTimeCommand}"/>
-            <Button Content="Int top time" Margin="5" Command="{Binding IntTopTimeCommand}"/>
-            <Button Content="Beg top time" Margin="5" Command="{Binding BegTopTimeCommand}"/>
-            <Button Content="Exp top 3BV/s" Margin="5" Command="{Binding ExpTopBBBVPerSecCommand}"/>
-            <Button Content="Int top 3BV/s" Margin="5" Command="{Binding IntTopBBBVPerSecCommand}"/>
-            <Button Content="Beg top 3BV/s" Margin="5" Command="{Binding BegTopBBBVPerSecCommand}"/>
-            <Button Content="Exp monthly stats" Margin="5" Command="{Binding ExpMonthlyStatsCommand}"/>
-            <Button Content="Int monthly stats" Margin="5" Command="{Binding IntMonthlyStatsCommand}"/>
-            <Button Content="Beg monthly stats" Margin="5" Command="{Binding BegMonthlyStatsCommand}"/>
-            <Button Content="Exp yearly stats" Margin="5" Command="{Binding ExpYearlyStatsCommand}"/>
-            <Button Content="Int yearly stats" Margin="5" Command="{Binding IntYearlyStatsCommand}"/>
-            <Button Content="Beg yearly stats" Margin="5" Command="{Binding BegYearlyStatsCommand}"/>
+        <StackPanel DockPanel.Dock="Left" Width="175" Background="#DDD" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="All levels history" Width="100" Margin="5,2,2,2" Command="{Binding AllHistoryCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding AllHistoryFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding AllHistoryNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Exp history" Width="100" Margin="5,2,2,2" Command="{Binding ExpHistoryCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpHistoryFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpHistoryNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Int history" Width="100" Margin="5,2,2,2" Command="{Binding IntHistoryCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntHistoryFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntHistoryNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Beg history" Width="100" Margin="5,2,2,2" Command="{Binding BegHistoryCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegHistoryFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegHistoryNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Exp top time" Width="100" Margin="5,2,2,2" Command="{Binding ExpTopTimeCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpTopTimeFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpTopTimeNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Int top time" Width="100" Margin="5,2,2,2" Command="{Binding IntTopTimeCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntTopTimeFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntTopTimeNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Beg top time" Width="100" Margin="5,2,2,2" Command="{Binding BegTopTimeCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegTopTimeFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegTopTimeNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Exp top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding ExpTopBBBVPerSecCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpTopBBBVPerSecFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpTopBBBVPerSecNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Int top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding IntTopBBBVPerSecCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntTopBBBVPerSecFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntTopBBBVPerSecNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Beg top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding BegTopBBBVPerSecCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegTopBBBVPerSecFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegTopBBBVPerSecNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Exp monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding ExpMonthlyStatsCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpMonthlyStatsFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpMonthlyStatsNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Int monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding IntMonthlyStatsCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntMonthlyStatsFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntMonthlyStatsNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Beg monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding BegMonthlyStatsCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegMonthlyStatsFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegMonthlyStatsNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Exp yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding ExpYearlyStatsCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpYearlyStatsFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpYearlyStatsNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Int yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding IntYearlyStatsCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntYearlyStatsFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntYearlyStatsNFCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Beg yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding BegYearlyStatsCommand}"/>
+                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegYearlyStatsFLCommand}"/>
+                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegYearlyStatsNFCommand}"/>
+            </StackPanel>
         </StackPanel>
+
 
         <ContentControl Content="{Binding CurrentView}"
                         ContentTemplateSelector="{StaticResource Selector}"/>
