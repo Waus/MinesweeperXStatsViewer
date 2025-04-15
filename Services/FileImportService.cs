@@ -55,47 +55,7 @@ namespace MinesweeperXStatsViewer.Services
                 return new List<StatsItem>();
             }
 
-            var sortedBegStatsItems = statsItemsList
-				.Where(a => a.Level == LevelEnum.Beg)
-				.OrderBy(item => item.Time)
-				.ToList();
-
-			var sortedIntStatsItems = statsItemsList
-				.Where(a => a.Level == LevelEnum.Int)
-				.OrderBy(item => item.Time)
-				.ToList();
-
-			var sortedExpStatsItems = statsItemsList
-				.Where(a => a.Level == LevelEnum.Exp)
-				.OrderBy(item => item.Time)
-				.ToList();
-
-			var BegStatsItemsWithTimeRank = SetTimeRanks(sortedBegStatsItems);
-			var IntStatsItemsWithTimeRank = SetTimeRanks(sortedIntStatsItems);
-			var ExpStatsItemsWithTimeRank = SetTimeRanks(sortedExpStatsItems);
-
-			sortedBegStatsItems = BegStatsItemsWithTimeRank
-				.OrderByDescending(item => item.BBBVPerSec)
-				.ToList();
-
-			sortedIntStatsItems = ExpStatsItemsWithTimeRank
-				.OrderByDescending(item => item.BBBVPerSec)
-				.ToList();
-
-			sortedExpStatsItems = IntStatsItemsWithTimeRank
-				.OrderByDescending(item => item.BBBVPerSec)
-				.ToList();
-
-			var BegStatsItemsWithAllRanks = SetBBBVPerSecRanks(sortedBegStatsItems);
-			var IntStatsItemsWithAllRanks = SetBBBVPerSecRanks(sortedIntStatsItems);
-			var ExpStatsItemsWithAllRanks = SetBBBVPerSecRanks(sortedExpStatsItems);
-
-			var allStatsItemsWithRank = BegStatsItemsWithAllRanks
-			.Concat(IntStatsItemsWithAllRanks)
-			.Concat(ExpStatsItemsWithAllRanks)
-			.ToList();
-
-			return allStatsItemsWithRank;
+			return statsItemsList;
 		}
 
 		private static Encoding DetectEncodingOrDefault(string filePath, Encoding defaultEncoding)
@@ -200,53 +160,5 @@ namespace MinesweeperXStatsViewer.Services
 
 			return new DateTime(year, month, day, timePart.Hour, timePart.Minute, timePart.Second);
 		}
-
-		private static List<StatsItem> SetTimeRanks(List<StatsItem> sortedStatsItems)
-		{
-			double previousTime = -1;
-			int rank = 0;
-			int rankModifier = 1;
-			foreach (var statsItem in sortedStatsItems)
-			{
-				if (statsItem.Time == previousTime)
-				{
-					statsItem.TimeRank = rank;
-					rankModifier++;
-				}
-				else
-				{
-					rank += rankModifier;
-					statsItem.TimeRank = rank;
-					previousTime = statsItem.Time;
-					rankModifier = 1;
-				}
-			}
-			return sortedStatsItems;
-		}
-
-		private static List<StatsItem> SetBBBVPerSecRanks(List<StatsItem> sortedStatsItems)
-		{
-			double previousBBBVPerSec = -1;
-			int rank = 0;
-			int rankModifier = 1;
-			foreach (var statsItem in sortedStatsItems)
-			{
-				if (statsItem.BBBVPerSec == previousBBBVPerSec)
-				{
-					statsItem.BBBVPerSecRank = rank;
-					rankModifier++;
-				}
-				else
-				{
-					rank += rankModifier;
-					statsItem.BBBVPerSecRank = rank;
-					previousBBBVPerSec = statsItem.BBBVPerSec;
-					rankModifier = 1;
-				}
-			}
-			return sortedStatsItems;
-		}
-
-
 	}
 }
