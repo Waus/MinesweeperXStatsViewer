@@ -3,271 +3,172 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MinesweeperXStatsViewer.Views"
         xmlns:vm="clr-namespace:MinesweeperXStatsViewer.ViewModels"
+        xmlns:views="clr-namespace:MinesweeperXStatsViewer.Views"
         Title="Minesweeper X Stats Viewer" Height="600" Width="900"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
 
         <DataTemplate x:Key="HistoryViewTemplate">
-            <Grid>
-                <DataGrid ItemsSource="{Binding DataContext.StatsItems, RelativeSource={RelativeSource AncestorType=Window}}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          Margin="10">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
-                        <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat={}{0:dd-MM-yyyy HH:mm:ss}}" Width="Auto" MinWidth="170"/>
-                        <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="3BV" Binding="{Binding BBBV}" Width="*"/>
-                        <DataGridTextColumn Header="3BV/s" Binding="{Binding BBBVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="RQP" Binding="{Binding RQP, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Left" Binding="{Binding Left}" Width="*"/>
-                        <DataGridTextColumn Header="Middle" Binding="{Binding Middle}" Width="*"/>
-                        <DataGridTextColumn Header="Right" Binding="{Binding Right}" Width="*"/>
-                        <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="*"/>
-                        <DataGridTextColumn Header="Left/s" Binding="{Binding LeftPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Mid/s" Binding="{Binding MiddlePerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Right/s" Binding="{Binding RightPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Total/s" Binding="{Binding TotalPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <views:HistoryView/>
         </DataTemplate>
 
         <DataTemplate x:Key="TopTimeViewTemplate">
-            <Grid>
-                <DataGrid ItemsSource="{Binding DataContext.StatsItems, RelativeSource={RelativeSource AncestorType=Window}}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          Margin="10">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="#" Binding="{Binding TimeRank}" Width="*"/>
-                        <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
-                        <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat={}{0:dd-MM-yyyy HH:mm:ss}}" Width="Auto" MinWidth="170"/>
-                        <DataGridTextColumn Header="3BV" Binding="{Binding BBBV}" Width="*"/>
-                        <DataGridTextColumn Header="3BV/s" Binding="{Binding BBBVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="RQP" Binding="{Binding RQP, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Left" Binding="{Binding Left}" Width="*"/>
-                        <DataGridTextColumn Header="Middle" Binding="{Binding Middle}" Width="*"/>
-                        <DataGridTextColumn Header="Right" Binding="{Binding Right}" Width="*"/>
-                        <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="*"/>
-                        <DataGridTextColumn Header="Left/s" Binding="{Binding LeftPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Mid/s" Binding="{Binding MiddlePerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Right/s" Binding="{Binding RightPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Total/s" Binding="{Binding TotalPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <views:TopTimeView/>
         </DataTemplate>
 
         <DataTemplate x:Key="TopBBBVPerSecViewTemplate">
-            <Grid>
-                <DataGrid ItemsSource="{Binding DataContext.StatsItems, RelativeSource={RelativeSource AncestorType=Window}}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          Margin="10">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="#" Binding="{Binding BBBVPerSecRank}" Width="*"/>
-                        <DataGridTextColumn Header="3BV/s" Binding="{Binding BBBVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
-                        <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat={}{0:dd-MM-yyyy HH:mm:ss}}" Width="Auto" MinWidth="170"/>
-                        <DataGridTextColumn Header="Time" Binding="{Binding Time, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="3BV" Binding="{Binding BBBV}" Width="*"/>
-                        <DataGridTextColumn Header="RQP" Binding="{Binding RQP, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Left" Binding="{Binding Left}" Width="*"/>
-                        <DataGridTextColumn Header="Middle" Binding="{Binding Middle}" Width="*"/>
-                        <DataGridTextColumn Header="Right" Binding="{Binding Right}" Width="*"/>
-                        <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="*"/>
-                        <DataGridTextColumn Header="Left/s" Binding="{Binding LeftPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Mid/s" Binding="{Binding MiddlePerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Right/s" Binding="{Binding RightPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Total/s" Binding="{Binding TotalPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <views:TopBBBVPerSecView/>
         </DataTemplate>
 
         <DataTemplate x:Key="MonthlyStatsViewTemplate">
-            <Grid>
-                <DataGrid ItemsSource="{Binding DataContext.StatsMonthlyAggregated, RelativeSource={RelativeSource AncestorType=Window}}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          Margin="10">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
-                        <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="*"/>
-                        <DataGridTextColumn Header="Month" Binding="{Binding Month}" Width="*"/>
-                        <DataGridTextColumn Header="Games Won" Binding="{Binding GamesWon}" Width="*"/>
-                        <DataGridTextColumn Header="Avg Time" Binding="{Binding AverageTime, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Avg 3BV/s" Binding="{Binding Average3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Best Time" Binding="{Binding BestTime, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Best 3BV/s" Binding="{Binding Best3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <views:MonthlyStatsView/>
         </DataTemplate>
 
         <DataTemplate x:Key="YearlyStatsViewTemplate">
-            <Grid>
-                <DataGrid ItemsSource="{Binding DataContext.StatsYearlyAggregated, RelativeSource={RelativeSource AncestorType=Window}}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  Margin="10">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
-                        <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="*"/>
-                        <DataGridTextColumn Header="Games Won" Binding="{Binding GamesWon}" Width="*"/>
-                        <DataGridTextColumn Header="Avg Time" Binding="{Binding AverageTime, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Avg 3BV/s" Binding="{Binding Average3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Best Time" Binding="{Binding BestTime, StringFormat={}{0:F2}}" Width="*"/>
-                        <DataGridTextColumn Header="Best 3BV/s" Binding="{Binding Best3BVPerSec, StringFormat={}{0:F2}}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <views:YearlyStatsView/>
         </DataTemplate>
 
-        <local:MyViewSelector x:Key="Selector"
-                              HistoryTemplate="{StaticResource HistoryViewTemplate}"
-                              TopTimeTemplate="{StaticResource TopTimeViewTemplate}"
-                              TopBBBVPerSecTemplate="{StaticResource TopBBBVPerSecViewTemplate}"
-                              MonthlyStatsTemplate="{StaticResource MonthlyStatsViewTemplate}"
-                              YearlyStatsTemplate="{StaticResource YearlyStatsViewTemplate}"/>
+        <views:MyViewSelector x:Key="Selector"
+                          HistoryTemplate="{StaticResource HistoryViewTemplate}"
+                          TopTimeTemplate="{StaticResource TopTimeViewTemplate}"
+                          TopBBBVPerSecTemplate="{StaticResource TopBBBVPerSecViewTemplate}"
+                          MonthlyStatsTemplate="{StaticResource MonthlyStatsViewTemplate}"
+                          YearlyStatsTemplate="{StaticResource YearlyStatsViewTemplate}"/>
+
     </Window.Resources>
 
-    <DockPanel>
-
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#EEE" Height="50">
-            <Button Content="Choose stats file" Margin="10" Padding="10,5" Command="{Binding LoadFileCommand}"/>
-            <Button Content="Initial settings" Margin="10" Padding="10,5" Command="{Binding OpenSettingsCommand}"/>
+    <DockPanel LastChildFill="True">
+        <!-- Top pannel with buttons -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Background="#EEE"
+                    Height="50">
+            <Button Content="Choose stats file"
+                    Margin="10"
+                    Padding="10,5"
+                    Command="{Binding LoadFileCommand}"/>
+            <Button Content="Initial settings"
+                    Margin="10"
+                    Padding="10,5"
+                    Command="{Binding OpenSettingsCommand}"/>
         </StackPanel>
 
-        <StackPanel DockPanel.Dock="Left" Width="175" Background="#DDD" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="All levels history" Width="100" Margin="5,2,2,2" Command="{Binding AllHistoryCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding AllHistoryFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding AllHistoryNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Exp history" Width="100" Margin="5,2,2,2" Command="{Binding ExpHistoryCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpHistoryFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpHistoryNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Int history" Width="100" Margin="5,2,2,2" Command="{Binding IntHistoryCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntHistoryFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntHistoryNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Beg history" Width="100" Margin="5,2,2,2" Command="{Binding BegHistoryCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegHistoryFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegHistoryNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Exp top time" Width="100" Margin="5,2,2,2" Command="{Binding ExpTopTimeCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpTopTimeFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpTopTimeNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Int top time" Width="100" Margin="5,2,2,2" Command="{Binding IntTopTimeCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntTopTimeFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntTopTimeNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Beg top time" Width="100" Margin="5,2,2,2" Command="{Binding BegTopTimeCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegTopTimeFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegTopTimeNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Exp top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding ExpTopBBBVPerSecCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpTopBBBVPerSecFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpTopBBBVPerSecNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Int top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding IntTopBBBVPerSecCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntTopBBBVPerSecFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntTopBBBVPerSecNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Beg top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding BegTopBBBVPerSecCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegTopBBBVPerSecFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegTopBBBVPerSecNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Exp monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding ExpMonthlyStatsCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpMonthlyStatsFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpMonthlyStatsNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Int monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding IntMonthlyStatsCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntMonthlyStatsFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntMonthlyStatsNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Beg monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding BegMonthlyStatsCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegMonthlyStatsFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegMonthlyStatsNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Exp yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding ExpYearlyStatsCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpYearlyStatsFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpYearlyStatsNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Int yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding IntYearlyStatsCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding IntYearlyStatsFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding IntYearlyStatsNFCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Beg yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding BegYearlyStatsCommand}"/>
-                <Button Content="FL" Width="30" Margin="2" Command="{Binding BegYearlyStatsFLCommand}"/>
-                <Button Content="NF" Width="30" Margin="2" Command="{Binding BegYearlyStatsNFCommand}"/>
-            </StackPanel>
-        </StackPanel>
+        <!-- Main part: left part: pannel with buttons and right part: table -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <!-- Left part: pannel with buttons -->
+            <ScrollViewer
+            Grid.Column="0"
+            VerticalScrollBarVisibility="Auto"
+            Height="{Binding ActualHeight, ElementName=RightContentControl}">
+                <StackPanel Width="175" Background="#DDD" Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="All levels history" Width="100" Margin="5,2,2,2" Command="{Binding AllHistoryCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding AllHistoryFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding AllHistoryNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Exp history" Width="100" Margin="5,2,2,2" Command="{Binding ExpHistoryCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpHistoryFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpHistoryNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Int history" Width="100" Margin="5,2,2,2" Command="{Binding IntHistoryCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding IntHistoryFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding IntHistoryNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Beg history" Width="100" Margin="5,2,2,2" Command="{Binding BegHistoryCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding BegHistoryFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding BegHistoryNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Exp top time" Width="100" Margin="5,2,2,2" Command="{Binding ExpTopTimeCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpTopTimeFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpTopTimeNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Int top time" Width="100" Margin="5,2,2,2" Command="{Binding IntTopTimeCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding IntTopTimeFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding IntTopTimeNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Beg top time" Width="100" Margin="5,2,2,2" Command="{Binding BegTopTimeCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding BegTopTimeFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding BegTopTimeNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Exp top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding ExpTopBBBVPerSecCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpTopBBBVPerSecFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpTopBBBVPerSecNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Int top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding IntTopBBBVPerSecCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding IntTopBBBVPerSecFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding IntTopBBBVPerSecNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Beg top 3BV/s" Width="100" Margin="5,2,2,2" Command="{Binding BegTopBBBVPerSecCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding BegTopBBBVPerSecFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding BegTopBBBVPerSecNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Exp monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding ExpMonthlyStatsCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpMonthlyStatsFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpMonthlyStatsNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Int monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding IntMonthlyStatsCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding IntMonthlyStatsFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding IntMonthlyStatsNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Beg monthly stats" Width="100" Margin="5,2,2,2" Command="{Binding BegMonthlyStatsCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding BegMonthlyStatsFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding BegMonthlyStatsNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Exp yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding ExpYearlyStatsCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding ExpYearlyStatsFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding ExpYearlyStatsNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Int yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding IntYearlyStatsCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding IntYearlyStatsFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding IntYearlyStatsNFCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Beg yearly stats" Width="100" Margin="5,2,2,2" Command="{Binding BegYearlyStatsCommand}"/>
+                        <Button Content="FL" Width="30" Margin="2" Command="{Binding BegYearlyStatsFLCommand}"/>
+                        <Button Content="NF" Width="30" Margin="2" Command="{Binding BegYearlyStatsNFCommand}"/>
+                    </StackPanel>
 
-        <ContentControl Content="{Binding CurrentView}"
-                        ContentTemplateSelector="{StaticResource Selector}"/>
+                </StackPanel>
 
+            </ScrollViewer>
+
+            <!-- Right part: table -->
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <TextBlock DockPanel.Dock="Top"
+                   Text="{Binding CurrentViewDisplay}"
+                   FontSize="14"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,5,0,0" />
+                <ContentControl
+                Content="{Binding CurrentView}"
+                ContentTemplateSelector="{StaticResource Selector}"
+                Margin="5"/>
+            </StackPanel>
+            
+        </Grid>
     </DockPanel>
+
+
+
 </Window>
