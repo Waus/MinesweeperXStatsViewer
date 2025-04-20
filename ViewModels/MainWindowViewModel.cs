@@ -21,26 +21,46 @@ namespace MinesweeperXStatsViewer.ViewModels
         private ObservableCollection<StatsYearlyAggregate> _statsYearlyAggregated;
         private ViewModeEnum _currentView;
         private string _currentViewDisplay;
+
+        private int? BegIOEFilter =>
+        int.TryParse(Properties.Settings.Default.BegTimeFilterForIOE, out var v)
+          ? v
+          : null;
+
+        private int? IntIOEFilter =>
+        int.TryParse(Properties.Settings.Default.IntTimeFilterForIOE, out var v)
+          ? v
+          : null;
+
+        private int? ExpIOEFilter =>
+        int.TryParse(Properties.Settings.Default.ExpTimeFilterForIOE, out var v)
+          ? v
+          : null;
+
         public bool FileLoaded
         {
             get => _fileLoaded;
             set { _fileLoaded = value; }
         }
+
         public ObservableCollection<StatsItem> StatsItems
         {
             get => _statsItems;
             set { _statsItems = value; OnPropertyChanged(); }
         }
+
         public ObservableCollection<StatsMonthlyAggregate> StatsMonthlyAggregated
         {
             get => _statsMonthlyAggregated;
             set { _statsMonthlyAggregated = value; OnPropertyChanged(); }
         }
+
         public ObservableCollection<StatsYearlyAggregate> StatsYearlyAggregated
         {
             get => _statsYearlyAggregated;
             set { _statsYearlyAggregated = value; OnPropertyChanged(); }
         }
+
         public ViewModeEnum CurrentView
         {
             get => _currentView;
@@ -52,6 +72,7 @@ namespace MinesweeperXStatsViewer.ViewModels
             get => _currentViewDisplay;
             set { _currentViewDisplay = value; OnPropertyChanged(); }
         }
+
         public ICommand LoadFileCommand { get; }
         public ICommand OpenSettingsCommand { get; }
         public event Action RequestSettingsWindow;
@@ -144,24 +165,24 @@ namespace MinesweeperXStatsViewer.ViewModels
             BegTopBBBVPerSecCommand = new RelayCommand(_ => FilterAndSortItems(x => x.Level == LevelEnum.Beg, x => x.BBBVPerSec, false, ViewModeEnum.TopBBBVPerSecView, (item, rank) => item.BBBVPerSecRank = rank, "Beg top 3BV/s"));
             BegTopBBBVPerSecFLCommand = new RelayCommand(_ => FilterAndSortItems(x => x.Level == LevelEnum.Beg && x.Right > 0, x => x.BBBVPerSec, false, ViewModeEnum.TopBBBVPerSecView, (item, rank) => item.BBBVPerSecRank = rank, "Beg FL top 3BV/s"));
             BegTopBBBVPerSecNFCommand = new RelayCommand(_ => FilterAndSortItems(x => x.Level == LevelEnum.Beg && x.Right == 0, x => x.BBBVPerSec, false, ViewModeEnum.TopBBBVPerSecView, (item, rank) => item.BBBVPerSecRank = rank, "Beg NF top 3BV/s"));
-            ExpMonthlyStatsCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Exp && x.Time < 60, "Exp monthly stats")); // Time < 60 to filter out games played for IOE
-            ExpMonthlyStatsFLCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Exp && x.Right > 0 && x.Time < 60, "Exp FL monthly stats")); // Time < 60 to filter out games played for IOE
-            ExpMonthlyStatsNFCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Exp && x.Right == 0 && x.Time < 60, "Exp NF monthly stats")); // Time < 60 to filter out games played for IOE
-            IntMonthlyStatsCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Int, "Int monthly stats"));
-            IntMonthlyStatsFLCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Int && x.Right > 0, "Int FL monthly stats"));
-            IntMonthlyStatsNFCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Int && x.Right == 0, "Int NF monthly stats"));
-            BegMonthlyStatsCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Beg, "Beg monthly stats"));
-            BegMonthlyStatsFLCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Beg && x.Right > 0, "Beg FL monthly stats"));
-            BegMonthlyStatsNFCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Beg && x.Right == 0, "Beg NF monthly stats"));
-            ExpYearlyStatsCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Exp && x.Time < 60, "Exp yearly stats")); // Time < 60 to filter out games played for IOE
-            ExpYearlyStatsFLCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Exp && x.Right > 0 && x.Time < 60, "Exp FL yearly stats")); // Time < 60 to filter out games played for IOE
-            ExpYearlyStatsNFCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Exp && x.Right == 0 && x.Time < 60, "Exp NF yearly stats")); // Time < 60 to filter out games played for IOE
-            IntYearlyStatsCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Int, "Int yearly stats"));
-            IntYearlyStatsFLCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Int && x.Right > 0, "Int FL yearly stats"));
-            IntYearlyStatsNFCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Int && x.Right == 0, "Int NF yearly stats"));
-            BegYearlyStatsCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Beg, "Beg yearly stats"));
-            BegYearlyStatsFLCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Beg && x.Right > 0, "Beg FL yearly stats"));
-            BegYearlyStatsNFCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Beg && x.Right == 0, "Beg NF yearly stats"));
+            ExpMonthlyStatsCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Exp && (ExpIOEFilter == null || x.Time < ExpIOEFilter), "Exp monthly stats"));
+            ExpMonthlyStatsFLCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Exp && (ExpIOEFilter == null || x.Time < ExpIOEFilter) && x.Right > 0, "Exp FL monthly stats"));
+            ExpMonthlyStatsNFCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Exp && (ExpIOEFilter == null || x.Time < ExpIOEFilter) && x.Right == 0, "Exp NF monthly stats"));
+            IntMonthlyStatsCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Int && (IntIOEFilter == null || x.Time < IntIOEFilter), "Int monthly stats"));
+            IntMonthlyStatsFLCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Int && (IntIOEFilter == null || x.Time < IntIOEFilter) && x.Right > 0, "Int FL monthly stats"));
+            IntMonthlyStatsNFCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Int && (IntIOEFilter == null || x.Time < IntIOEFilter) && x.Right == 0, "Int NF monthly stats"));
+            BegMonthlyStatsCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Beg && (BegIOEFilter == null || x.Time < BegIOEFilter), "Beg monthly stats"));
+            BegMonthlyStatsFLCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Beg && (BegIOEFilter == null || x.Time < BegIOEFilter) && x.Right > 0, "Beg FL monthly stats"));
+            BegMonthlyStatsNFCommand = new RelayCommand(_ => MonthlyStats(x => x.Level == LevelEnum.Beg && (BegIOEFilter == null || x.Time < BegIOEFilter) && x.Right == 0, "Beg NF monthly stats"));
+            ExpYearlyStatsCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Exp && (ExpIOEFilter == null || x.Time < ExpIOEFilter), "Exp yearly stats"));
+            ExpYearlyStatsFLCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Exp && (ExpIOEFilter == null || x.Time < ExpIOEFilter) && x.Right > 0, "Exp FL yearly stats"));
+            ExpYearlyStatsNFCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Exp && (ExpIOEFilter == null || x.Time < ExpIOEFilter) && x.Right == 0, "Exp NF yearly stats"));
+            IntYearlyStatsCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Int && (IntIOEFilter == null || x.Time < IntIOEFilter), "Int yearly stats"));
+            IntYearlyStatsFLCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Int && (IntIOEFilter == null || x.Time < IntIOEFilter) && x.Right > 0, "Int FL yearly stats"));
+            IntYearlyStatsNFCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Int && (IntIOEFilter == null || x.Time < IntIOEFilter) && x.Right == 0, "Int NF yearly stats"));
+            BegYearlyStatsCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Beg && (BegIOEFilter == null || x.Time < BegIOEFilter), "Beg yearly stats"));
+            BegYearlyStatsFLCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Beg && (BegIOEFilter == null || x.Time < BegIOEFilter) && x.Right > 0, "Beg FL yearly stats"));
+            BegYearlyStatsNFCommand = new RelayCommand(_ => YearlyStats(x => x.Level == LevelEnum.Beg && (BegIOEFilter == null || x.Time < BegIOEFilter) && x.Right == 0, "Beg NF yearly stats"));
         }
 
         private void LoadFile(object parameter)
@@ -273,7 +294,7 @@ namespace MinesweeperXStatsViewer.ViewModels
         {
             if (!FileLoaded)
             {
-                 return;
+                return;
             }
             CurrentView = ViewModeEnum.YearlyStatsView;
             SetViewDisplay(displayName);

@@ -1,13 +1,43 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MinesweeperXStatsViewer.Views
 {
-    public partial class InitialSettingsWindow : Window
+    public partial class SettingsWindow : Window
     {
-        public InitialSettingsWindow()
+        private static readonly Regex _digitsOnly = new Regex("^[0-9]+$");
+        public SettingsWindow()
         {
             InitializeComponent();
             LoadSettings();
+        }
+
+        private void Numeric_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_digitsOnly.IsMatch(e.Text);
+        }
+
+        private void Numeric_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(DataFormats.Text))
+            {
+                var txt = (string)e.DataObject.GetData(DataFormats.Text);
+                if (!_digitsOnly.IsMatch(txt))
+                    e.CancelCommand();
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private void Numeric_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+                e.Handled = true;
         }
 
         private void LoadSettings()
@@ -24,6 +54,9 @@ namespace MinesweeperXStatsViewer.Views
             OctoberBox.Text = Properties.Settings.Default.October;
             NovemberBox.Text = Properties.Settings.Default.November;
             DecemberBox.Text = Properties.Settings.Default.December;
+            BeginnerBox.Text = (Properties.Settings.Default.BegTimeFilterForIOE).ToString();
+            IntermediateBox.Text = (Properties.Settings.Default.IntTimeFilterForIOE).ToString();
+            ExpertBox.Text = (Properties.Settings.Default.ExpTimeFilterForIOE).ToString();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -40,6 +73,9 @@ namespace MinesweeperXStatsViewer.Views
             Properties.Settings.Default.October = OctoberBox.Text;
             Properties.Settings.Default.November = NovemberBox.Text;
             Properties.Settings.Default.December = DecemberBox.Text;
+            Properties.Settings.Default.BegTimeFilterForIOE = BeginnerBox.Text;
+            Properties.Settings.Default.IntTimeFilterForIOE = IntermediateBox.Text;
+            Properties.Settings.Default.ExpTimeFilterForIOE = ExpertBox.Text;
 
             Properties.Settings.Default.Save();
             Close();

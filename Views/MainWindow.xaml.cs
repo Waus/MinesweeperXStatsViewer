@@ -21,7 +21,7 @@ public partial class MainWindow : Window
 
     private void OnRequestSettingsWindow()
     {
-        var settingsWindow = new InitialSettingsWindow { Owner = this };
+        var settingsWindow = new SettingsWindow { Owner = this };
         settingsWindow.ShowDialog();
     }
 

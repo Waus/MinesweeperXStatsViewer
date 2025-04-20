@@ -166,5 +166,41 @@ namespace MinesweeperXStatsViewer.Properties {
                 this["December"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("70")]
+        public string ExpTimeFilterForIOE {
+            get {
+                return ((string)(this["ExpTimeFilterForIOE"]));
+            }
+            set {
+                this["ExpTimeFilterForIOE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public string IntTimeFilterForIOE {
+            get {
+                return ((string)(this["IntTimeFilterForIOE"]));
+            }
+            set {
+                this["IntTimeFilterForIOE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        public string BegTimeFilterForIOE {
+            get {
+                return ((string)(this["BegTimeFilterForIOE"]));
+            }
+            set {
+                this["BegTimeFilterForIOE"] = value;
+            }
+        }
     }
 }

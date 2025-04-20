@@ -159,11 +159,11 @@
                    FontSize="14"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
-                   Margin="0,5,0,0" />
+                   Margin="0" />
                 <ContentControl
                 Content="{Binding CurrentView}"
                 ContentTemplateSelector="{StaticResource Selector}"
-                Margin="5"/>
+                Margin="0"/>
             </StackPanel>
             
         </Grid>

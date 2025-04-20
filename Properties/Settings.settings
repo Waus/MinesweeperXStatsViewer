@@ -38,5 +38,14 @@
     <Setting Name="December" Type="System.String" Scope="User">
       <Value Profile="(Default)">gru</Value>
     </Setting>
+    <Setting Name="ExpTimeFilterForIOE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">70</Value>
+    </Setting>
+    <Setting Name="IntTimeFilterForIOE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="BegTimeFilterForIOE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
